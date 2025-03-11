@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tính toán Lot Forex</title>
+  <!-- Link Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .result {
+      font-weight: bold;
+      color: #007700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-4">
+    <div class="row g-3">
+      <!-- Cột A -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Tài khoản Quỹ
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="pipsA" class="form-label">Nhập số pips:</label>
+              <input type="number" class="form-control" id="pipsA" placeholder="Nhập pips">
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="multiplyA">
+              <label class="form-check-label" for="multiplyA">
+                Cặp xxxJPY?
+              </label>
+            </div>
+            <div class="result" id="resultA">Result: </div>
+          </div>
+        </div>
+      </div>
+      <!-- Cột B -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Tài khoản Exness
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="pipsB" class="form-label">Nhập số pips:</label>
+              <input type="number" class="form-control" id="pipsB" placeholder="Nhập pips">
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="multiplyB">
+              <label class="form-check-label" for="multiplyB">
+                Cặp xxxJPY?
+              </label>
+            </div>
+            <div class="result" id="resultB">Result: </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript tính toán -->
+  <script>
+    // Lấy các phần tử của Cột A
+    const pipsAInput = document.getElementById('pipsA');
+    const resultADiv = document.getElementById('resultA');
+    const multiplyACheckbox = document.getElementById('multiplyA');
+
+    // Lấy các phần tử của Cột B
+    const pipsBInput = document.getElementById('pipsB');
+    const resultBDiv = document.getElementById('resultB');
+    const multiplyBCheckbox = document.getElementById('multiplyB');
+
+    // Hàm tính lot cho Cột A với vốn cố định 25$
+    function calculateLotA() {
+      const pips = parseFloat(pipsAInput.value);
+      if (!isNaN(pips)) {
+        let lot = 25 / (pips + 4);
+        if (multiplyACheckbox.checked) {
+          lot *= 1.5;
+        }
+        resultADiv.textContent = 'Result: ' + lot.toFixed(2);
+      } else {
+        resultADiv.textContent = 'Result: ';
+      }
+    }
+
+    // Hàm tính lot cho Cột B với vốn cố định 5$
+    function calculateLotB() {
+      const pips = parseFloat(pipsBInput.value);
+      if (!isNaN(pips)) {
+        let lot = 5 / (pips + 7);
+        if (multiplyBCheckbox.checked) {
+          lot *= 1.5;
+        }
+        resultBDiv.textContent = 'Result: ' + lot.toFixed(2);
+      } else {
+        resultBDiv.textContent = 'Result: ';
+      }
+    }
+
+    // Lắng nghe sự kiện nhập liệu và thay đổi checkbox để cập nhật kết quả
+    pipsAInput.addEventListener('input', calculateLotA);
+    multiplyACheckbox.addEventListener('change', calculateLotA);
+    pipsBInput.addEventListener('input', calculateLotB);
+    multiplyBCheckbox.addEventListener('change', calculateLotB);
+  </script>
+  
+  <!-- Bootstrap JS Bundle (bao gồm Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
